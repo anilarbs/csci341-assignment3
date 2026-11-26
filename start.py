@@ -1,10 +1,8 @@
 ﻿import os
-import traceback
 
 import uvicorn
 from sqlalchemy import inspect
 from db import engine, initialize
-from part2 import main as run_part2
 
 
 def main():
@@ -17,15 +15,6 @@ def main():
             raise RuntimeError("Unexpected database structure.")
         else:
             print("Existing database preserved.", flush=True)
-
-    print("========== PART 2 START ==========", flush=True)
-
-    try:
-        run_part2()
-        print("========== PART 2 PASSED ==========", flush=True)
-    except Exception:
-        traceback.print_exc()
-        print("========== PART 2 FAILED ==========", flush=True)
 
     uvicorn.run(
         "app:app",
