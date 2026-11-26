@@ -1,7 +1,8 @@
 """Transactional CRUD. SQL identifiers come only from the definitions in this module."""
 from fastapi import HTTPException, Response
 from fastapi_offline import FastAPIOffline
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.responses import JSONResponse, FileResponse
+from pathlib import Path
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError, DataError
 from db import engine
@@ -14,7 +15,7 @@ app = FastAPIOffline(title="Research Conference Administration", version="1.0",
 
 @app.get("/", include_in_schema=False)
 def home():
-    return RedirectResponse("/docs")
+    return FileResponse(Path(__file__).with_name("dashboard.html"), media_type="text/html")
 
 
 @app.exception_handler(IntegrityError)
