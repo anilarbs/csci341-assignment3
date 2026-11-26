@@ -64,7 +64,7 @@ All five paper statuses match the brief, including the space in 'under review'. 
 
 ## Query parameters and expected results
 
-part2.py creates and seeds an isolated schema within a transaction. Each mutation uses its own savepoint that is rolled back immediately. All retrievals and the view use the same original seed. Closing the outer transaction removes the demo schema. The application database remains available during query demonstrations. part2-results.txt is the captured SQL, bound values, per-table counts and results from PostgreSQL.
+part2.py creates and seeds an isolated schema within a transaction. Each mutation uses its own savepoint that is rolled back immediately. All retrievals and the view use the same original seed. Closing the outer transaction removes the demo schema. The application database remains available during query demonstrations. part2_results.txt is the captured SQL, bound values, per-table counts and results from PostgreSQL.
 
 | Task | Input or population | Result on seed |
 |---|---|---|
@@ -85,11 +85,11 @@ part2.py creates and seeds an isolated schema within a transaction. Each mutatio
 
 ## Using the interface
 
-Open a method in /docs, select **Try it out** and **Execute**. For a full update, GET the single item and copy its JSON into PUT after removing its top-level ID (the ID is already in the path). Keep nested author_id and version_no. The item endpoints return nested profiles or ordered authors, keywords and versions. Read the selection data at /reference and the live view at /schedule. Use a null session_id to unschedule a paper. A successful delete returns HTTP 204 with an empty body. A missing item returns 404, invalid form or business-rule changes return 422, and database integrity conflicts return 409 with a reason. demo_api.py contains complete example bodies. api-results.txt records an actual POST/GET/PUT/DELETE exercise, checks of both required rejection paths, and rollback after a duplicate keyword.
+Open a method in /docs, select **Try it out** and **Execute**. For a full update, GET the single item and copy its JSON into PUT after removing its top-level ID (the ID is already in the path). Keep nested author_id and version_no. The item endpoints return nested profiles or ordered authors, keywords and versions. Read the selection data at /reference and the live view at /schedule. Use a null session_id to unschedule a paper. A successful delete returns HTTP 204 with an empty body. A missing item returns 404, invalid form or business-rule changes return 422, and database integrity conflicts return 409 with a reason. demo_api.py contains complete example bodies. api_results.txt records an actual POST/GET/PUT/DELETE exercise, checks of both required rejection paths, and rollback after a duplicate keyword.
 
 ### Reproducing the restore and full-record rollback tests
 
-Restore assignment3.sql into a fresh database with the standalone restore command above. Point DATABASE_URL to that copy and start the API. Run verify_seed.py, demo_api.py, then verify_seed.py again. The HTTP test records the maximum existing ID for each resource, creates one record in each, and checks all four generated IDs. It also requests a new paper title with a duplicate keyword, verifies that the keyword constraint caused HTTP 409, and compares the complete GET response before and after the rejected edit, including authors and versions. api-results.txt contains the transcript from this clean-restore run.
+Restore assignment3.sql into a fresh database with the standalone restore command above. Point DATABASE_URL to that copy and start the API. Run verify_seed.py, demo_api.py, then verify_seed.py again. The HTTP test records the maximum existing ID for each resource, creates one record in each, and checks all four generated IDs. It also requests a new paper title with a duplicate keyword, verifies that the keyword constraint caused HTTP 409, and compares the complete GET response before and after the rejected edit, including authors and versions. api_results.txt contains the transcript from this clean-restore run.
 
 ## Live application
 
