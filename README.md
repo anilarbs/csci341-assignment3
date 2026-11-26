@@ -1,7 +1,7 @@
-# CSCI 341 • Assignment 3
+﻿# CSCI 341 • Assignment 3
 ## Research Conference and Paper Review Management System
 
-The PostgreSQL database follows Assignment 3 Appendix A. FastAPI serves an interactive administrative interface at `/docs`. Users, papers, completed reviews and sessions each support list, detail, create, full update and delete. All data in this project are fictional.
+The PostgreSQL database follows Assignment 3 Appendix A. FastAPI serves the ConfAdmin administrative dashboard at `/` and interactive API documentation at `/docs`. Users, papers, completed reviews and sessions each support list, detail, create, full update and delete. All data in this project are fictional.
 
 ## Run on Windows, macOS or Linux with Docker Compose
 
@@ -26,9 +26,9 @@ Tested with Python 3.12, PostgreSQL 16.2, SQLAlchemy 2.1.9, psycopg 3.3.9, FastA
 
 ## Public deployment and presentation
 
-Deploy the Dockerfile as a web service and provision a persistent PostgreSQL database. Supply the provider's PostgreSQL connection string as the web service's DATABASE_URL, with the provider's SSL settings. The container binds to PORT (default 8000). Run `python db.py` **once** against the new empty hosted database, using a one-off shell or a local shell with the hosted connection string. Restarting the web service never reseeds it. Publish the service, open the public /docs URL in a signed-out browser, and test a read and a disposable write. Keep both services active for grading. The teaching application uses fictional data and requires no login.
+Deploy the Dockerfile as a web service and provision a persistent PostgreSQL database. Supply the provider's PostgreSQL connection string as the web service's DATABASE_URL, with the provider's SSL settings. The container binds to PORT (default 8000). The container runs start.py, which automatically initializes an empty PostgreSQL database and preserves existing data on subsequent restarts. Restarting the web service never reseeds it. Publish the service, open the public /docs URL in a signed-out browser, and test a read and a disposable write. Keep both services active for grading. The teaching application uses fictional data and requires no login.
 
-The accompanying local demonstration MP4 is delivered outside the ZIP. Record the deployed application segment at its public URL for the final video, upload the video to Google Drive, grant the graders viewing access and verify both links signed out. Fill in links.txt and the one-page executive summary. Use only actual members' surnames in the ZIP name. One team registration is required, including for a solo submission. The brief sets the registration deadline at November 15 and the assignment deadline at Friday, November 27. Check the course page for the submission time.
+The final demonstration video is submitted through Google Drive. Record the deployed application segment at its public URL for the final video, upload the video to Google Drive, grant the graders viewing access and verify both links signed out. Fill in links.txt and the one-page executive summary. Use only actual members' surnames in the ZIP name. One team registration is required, including for a solo submission. The brief sets the registration deadline at November 15 and the assignment deadline at Friday, November 27. Check the course page for the submission time.
 
 ## Schema and keys
 
@@ -90,3 +90,16 @@ Open a method in /docs, select **Try it out** and **Execute**. For a full update
 ### Reproducing the restore and full-record rollback tests
 
 Restore assignment3.sql into a fresh database with the standalone restore command above. Point DATABASE_URL to that copy and start the API. Run verify_seed.py, demo_api.py, then verify_seed.py again. The HTTP test records the maximum existing ID for each resource, creates one record in each, and checks all four generated IDs. It also requests a new paper title with a duplicate keyword, verifies that the keyword constraint caused HTTP 409, and compares the complete GET response before and after the rejected edit, including authors and versions. api-results.txt contains the transcript from this clean-restore run.
+
+## Live application
+
+- Administrative dashboard: https://csci341-assignment3-g41x.onrender.com
+- Swagger API: https://csci341-assignment3-g41x.onrender.com/docs
+- Source repository: https://github.com/anilarbs/csci341-assignment3
+- Hosting: Render, Docker, PostgreSQL.
+- Authentication: Not required.
+
+All numbered Part 2 SQL operations executed successfully on Render.
+The deployed API passed all CRUD, rejection and transaction rollback tests.
+The ConfAdmin dashboard uses live PostgreSQL data through the existing API.
+
