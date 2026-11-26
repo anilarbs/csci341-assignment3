@@ -1,3 +1,3 @@
 Public application URL: https://csci341-assignment3-g41x.onrender.com/
-Google Drive video URL: [pending upload and grader access verification]
+Google Drive video URL: https://drive.google.com/file/d/1_VrfgU60p14rlHC3rLXBE2udggzJL2iR/view?usp=drivesdk
 Demo credentials: No login required.
