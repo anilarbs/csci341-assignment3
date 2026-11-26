@@ -1,0 +1,3 @@
+Public application URL: [pending public deployment; use the public /docs URL]
+Google Drive video URL: [pending upload and grader access verification]
+Demo credentials: No login required.

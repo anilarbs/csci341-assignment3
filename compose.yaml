@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: conference
+      POSTGRES_USER: conference
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - conference-data:/var/lib/postgresql/data
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./sql/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+      - ./sql/view.sql:/docker-entrypoint-initdb.d/03-view.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U conference -d conference"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+  web:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://conference:${POSTGRES_PASSWORD}@db:5432/conference
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  conference-data:

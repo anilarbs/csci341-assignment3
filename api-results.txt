@@ -1,0 +1,57 @@
+GET /users -> 200
+GET /sessions -> 200
+GET /papers -> 200
+GET /reviews -> 200
+POST /users -> 201
+PUT /users/11 -> 200
+GET /users/11 -> 200
+POST /sessions -> 201
+PUT /sessions/4 -> 200
+GET /sessions/4 -> 200
+POST /papers -> 201
+PUT /papers/11 -> 200
+GET /papers/11 -> 200
+POST /reviews -> 201
+Identity verified: users generated 11 after maximum 10.
+Identity verified: sessions generated 4 after maximum 3.
+Identity verified: papers generated 11 after maximum 10.
+Identity verified: reviews generated 12 after maximum 11.
+PUT /reviews/12 -> 200
+GET /reviews/12 -> 200
+POST /reviews -> 422
+    Authors cannot review their own paper.
+PUT /reviews/12 -> 422
+    Authors cannot review their own paper.
+GET /papers/4 -> 200
+PUT /papers/4 -> 422
+    A reviewer of this paper cannot be added as an author.
+GET /papers/4 -> 200
+PUT /papers/11 -> 422
+    Only accepted papers may be assigned to sessions.
+PUT /papers/11 -> 422
+    The track and session belong to different conferences.
+PUT /papers/11 -> 422
+    The track and session belong to different conferences.
+PUT /sessions/4 -> 422
+    Moving this session would invalidate a scheduled paper.
+GET /papers/11 -> 200
+PUT /papers/11 -> 409
+    duplicate key value violates unique constraint "paper_keyword_pkey"
+GET /papers/11 -> 200
+Complete paper matched before and after rollback, including title, authors, versions and keywords.
+GET /sessions/4 -> 200
+GET /reviews/12 -> 200
+DELETE /sessions/4 -> 204
+GET /sessions/4 -> 404
+    Record does not exist.
+GET /papers/11 -> 200
+DELETE /reviews/12 -> 204
+GET /reviews/12 -> 404
+    Record does not exist.
+DELETE /papers/11 -> 204
+GET /papers/11 -> 404
+    Record does not exist.
+DELETE /users/11 -> 204
+GET /users/11 -> 404
+    Record does not exist.
+Passed all CRUD, rejection and rollback checks.
